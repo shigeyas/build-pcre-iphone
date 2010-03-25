@@ -2,7 +2,7 @@
 OPATH=$PATH
 
 TARGET=pcre-8.02
-SDK_VERSION=3.1.2
+SDK_VERSION=3.1.3
 
 CONFIG="--disable-shared"
 
