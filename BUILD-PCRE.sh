@@ -43,8 +43,10 @@ build_pcre() {
 
     ./configure ${CONFIG} ${HOST} \
 	CFLAGS="-arch ${ARCH} -isysroot ${SDKPATH}" \
+	CXXFLAGS="-arch ${ARCH} -isysroot ${SDKPATH}" \
 	LDFLAGS="-L." \
-	CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc"
+	CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc" \
+	CXX="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/g++"
 
     # Eliminate test unit entry 
     perl -pi.bak \
