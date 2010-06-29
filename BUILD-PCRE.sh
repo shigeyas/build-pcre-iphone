@@ -2,9 +2,9 @@
 OPATH=$PATH
 
 TARGET=pcre-8.02
-SDK_VERSION=3.1.3
+SDK_VERSION=4.0
 
-CONFIG="--disable-shared"
+CONFIG="--disable-shared --enable-utf8"
 
 # This script will compile a PCRE static lib for the device and simulator
 
