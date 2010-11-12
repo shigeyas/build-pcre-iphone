@@ -1,7 +1,7 @@
 #!/bin/bash
 OPATH=$PATH
 
-TARGET=pcre-8.02
+TARGET=pcre-8.10
 SDK_VERSION=4.2
 
 CONFIG="--disable-shared --enable-utf8"
