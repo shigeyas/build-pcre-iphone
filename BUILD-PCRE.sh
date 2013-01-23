@@ -1,10 +1,11 @@
 #!/bin/bash
 OPATH=$PATH
 
-TARGET=pcre-8.10
-SDK_VERSION=4.2
+TARGET=pcre-8.32
+SDK_VERSION=6.0
 
 CONFIG="--disable-shared --enable-utf8"
+DEVROOT="/Applications/Xcode.app/Contents/Developer"
 
 # This script will compile a PCRE static lib for the device and simulator
 
@@ -22,7 +23,7 @@ build_pcre() {
     tar zxf ${TARGET}.tar.gz
 
     case $LIBNAME in
-	device)  ARCH="armv6"; HOST="--host=arm-apple-darwin";;
+	device)  ARCH="armv7"; HOST="--host=arm-apple-darwin";;
 	*)       ARCH="i386"; HOST="";;
     esac
 
@@ -30,9 +31,9 @@ build_pcre() {
 
     cd ${TARGET}
 
-    SDKPATH="/Developer/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDK_VERSION}.sdk"
+    SDKPATH="${DEVROOT}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDK_VERSION}.sdk"
 
-    PATH=/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin:$OPATH
+    PATH="${DEVROOT}/Platforms/${PLATFORM}.platform/Developer/usr/bin:$OPATH"
     export PATH
 
     case $LIBNAME in
@@ -45,8 +46,8 @@ build_pcre() {
 	CFLAGS="-arch ${ARCH} -isysroot ${SDKPATH}" \
 	CXXFLAGS="-arch ${ARCH} -isysroot ${SDKPATH}" \
 	LDFLAGS="-L." \
-	CC="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc" \
-	CXX="/Developer/Platforms/${PLATFORM}.platform/Developer/usr/bin/g++"
+	CC="${DEVROOT}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc" \
+	CXX="${DEVROOT}/Platforms/${PLATFORM}.platform/Developer/usr/bin/g++"
 
     # Eliminate test unit entry 
     perl -pi.bak \
@@ -81,7 +82,8 @@ echo "Creating combined binary into directory 'dist'"
 
 /bin/rm -rf dist
 mkdir dist
-(cd dist-device; tar cf - . ) | (cd dist; tar xf -)
+TOP=`pwd`
+(cd ${TOP}/dist-device; /usr/bin/tar cf - . ) | (cd ${TOP}/dist; /usr/bin/tar xf -)
 
 for i in pcre pcrecpp pcreposix
 do
